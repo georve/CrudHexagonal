@@ -1,6 +1,7 @@
 package com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.mapper;
 
 import com.salesmanagement.salesmagament.domain.model.Prices;
+import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.model.PriceCreateDtoRequest;
 import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.model.PriceDtoResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -13,4 +14,6 @@ public interface PriceMapper {
     PriceDtoResponse toPriceDtoResponse(Prices prices);
 
     List<PriceDtoResponse> toPriceDtoResponseList(List<Prices> pricesList);
+
+    Prices toPrice(PriceCreateDtoRequest request);
 }
