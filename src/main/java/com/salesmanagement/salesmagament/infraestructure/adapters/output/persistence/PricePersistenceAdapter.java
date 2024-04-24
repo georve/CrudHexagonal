@@ -55,6 +55,12 @@ public class PricePersistenceAdapter implements PricePersistencePort {
         return this.mapper.toPrices(entity);
     }
 
+    @Override
+    public Optional<Prices> findById(String priceList) {
+        return this.priceRepository.findById(Long.valueOf(priceList))
+                .map(mapper::toPrices);
+    }
+
     private PriceEntity mapperToEntity(Prices prices){
         PriceEntity priceEntity = new PriceEntity();
        try {

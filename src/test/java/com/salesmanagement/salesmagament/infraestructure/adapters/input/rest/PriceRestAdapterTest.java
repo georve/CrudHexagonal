@@ -16,12 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -91,6 +88,26 @@ public class PriceRestAdapterTest {
                 ).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.brandId").value("1"))
                 .andExpect(jsonPath("$.price").value("22.5"));
+    }
+
+    @Test
+    void updateSuccessFullTest() throws Exception {
+        PriceCreateDtoRequest priceToSave = getBuildPriceRequest();
+        when(mapper.toPrice(any())).thenReturn(getBuildPrice());
+
+        when(port.update(anyString(),getBuildPrice())).thenReturn(getBuildPrice());
+        when(mapper.toPriceDtoResponse(any())).thenReturn(getBuildPriceResponse());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String eatToDoJSON = objectMapper.writeValueAsString(priceToSave);
+
+        client.perform(MockMvcRequestBuilders.put("/prices/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(eatToDoJSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.brandId").value("1"))
+                .andExpect(jsonPath("$.price").value("22.5"));
+
     }
 
     private PriceDtoResponse getBuildPriceResponse() {

@@ -37,4 +37,7 @@ There are tree main packages in the structure
   mvn springboot:run
 
 ```
-#
+# Testing the application deployed in LocalHost
+
+* [Search first price](http://localhost:8080/prices?appDate=2020-06-14 10:00:00&brandId=1&productId=35455)
+* [Insert A price]()

@@ -4,6 +4,7 @@ import com.salesmanagement.salesmagament.application.ports.input.PriceServicePor
 import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.mapper.PriceMapper;
 import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.model.PriceDtoResponse;
 import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.model.PriceCreateDtoRequest;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,10 @@ public class PriceControllerRestAdapter {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(restMapper.toPriceDtoResponse(
                         port.save(restMapper.toPrice(request))));
+    }
+
+    @PutMapping("/{id}")
+    public PriceDtoResponse update(@PathVariable String id,@RequestBody PriceCreateDtoRequest request) {
+        return restMapper.toPriceDtoResponse(port.update(id,restMapper.toPrice(request)));
     }
 }
