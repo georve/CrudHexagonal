@@ -7,7 +7,7 @@ import com.salesmanagement.salesmagament.infraestructure.adapters.output.persist
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -19,4 +19,5 @@ public interface PriceEntityMapper {
     @Mapping(source ="id", target="priceList")
     Prices toPrices(PriceEntity priceEntity);
     List<Prices> toPricesList(List<PriceEntity> priceEntities);
+
 }

@@ -1,4 +1,4 @@
-package com.salesmanagement.salesmagament.domain.model;
+package com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.model;
 
 import lombok.*;
 
@@ -7,13 +7,11 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Prices {
+public class PriceCreateDtoRequest {
     private Integer brandId;
     private String  startDate;
     private String  endDate;
-    private String  priceList;
     private Integer productId;
     private Double  price;
     private Integer priority;
-    private String currencyCode;
 }

@@ -8,4 +8,6 @@ import java.util.Map;
 public interface PriceServicePort {
 
     List<Prices> findByCriteria(Map<String,String> criteria);
+
+    Prices save(Prices priceToSave);
 }

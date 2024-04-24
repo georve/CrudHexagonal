@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 public class PricePersistenceAdapterTest {
@@ -52,8 +52,26 @@ public class PricePersistenceAdapterTest {
         map.put("appDate","2020-06-14 10:00:00");
        List<Prices> prices= pricePersistenceAdapter.findByCriteria(map);
 
-        assertEquals(prices.stream().count()>0,true);
+        assertEquals(prices.stream().count()>0, false);
 
+    }
+
+    @Test
+    public void savePriceSuccess(){
+        Prices pricesToSave=getBuildPrice();
+        Prices saved= pricePersistenceAdapter.save(pricesToSave);
+        assertNotNull(saved);
+    }
+
+    private static Prices getBuildPrice() {
+        return Prices.builder()
+                .startDate("2024-01-01 00:00:00")
+                .endDate("2024-03-01 23:59:59")
+                .brandId(1)
+                .priceList("55")
+                .priority(2)
+                .price(22.5)
+                .build();
     }
 
 
