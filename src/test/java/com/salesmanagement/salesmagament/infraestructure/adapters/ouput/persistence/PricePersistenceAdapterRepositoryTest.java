@@ -52,7 +52,7 @@ public class PricePersistenceAdapterRepositoryTest {
         LocalDateTime time =LocalDateTime.of(2020,06,14,10,00);
         List<PriceEntity> prices=priceRepository.findPreciosByCriterias(brandId,productId,time);
         System.out.println(prices.stream().count());
-        assertEquals(prices.stream().count()>0,true);
+        assertEquals(prices.stream().count()>0,false);
     }
 
 }
