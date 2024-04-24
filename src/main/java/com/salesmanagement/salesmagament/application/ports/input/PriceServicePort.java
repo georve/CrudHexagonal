@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface PriceServicePort {
-    Prices findById(Long id);
-    List<Prices> findAll();
-    Prices save(Prices price);
-    Prices update(Long id, Prices prices);
+
     List<Prices> findByCriteria(Map<String,String> criteria);
 }
