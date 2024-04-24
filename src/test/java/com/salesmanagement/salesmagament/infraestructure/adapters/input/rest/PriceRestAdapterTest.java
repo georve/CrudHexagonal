@@ -95,7 +95,7 @@ public class PriceRestAdapterTest {
         PriceCreateDtoRequest priceToSave = getBuildPriceRequest();
         when(mapper.toPrice(any())).thenReturn(getBuildPrice());
 
-        when(port.update(anyString(),getBuildPrice())).thenReturn(getBuildPrice());
+        when(port.update(anyString(),eq(getBuildPrice()))).thenReturn(getBuildPrice());
         when(mapper.toPriceDtoResponse(any())).thenReturn(getBuildPriceResponse());
         ObjectMapper objectMapper = new ObjectMapper();
         String eatToDoJSON = objectMapper.writeValueAsString(priceToSave);
