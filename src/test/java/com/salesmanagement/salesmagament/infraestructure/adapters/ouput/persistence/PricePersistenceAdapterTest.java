@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-public class PricePersistenceAdapterTest {
+ class PricePersistenceAdapterTest {
 
     private PricePersistenceAdapter pricePersistenceAdapter;
     @Autowired
@@ -36,7 +36,7 @@ public class PricePersistenceAdapterTest {
 
 
     @Test
-    public void findingPrice(){
+     void findingPrice(){
 
         List<PriceEntity> products = List.of(
                 new PriceEntity(1L,1, Timestamp.valueOf("2020-06-14 00:00:00"),Timestamp.valueOf("2020-12-31 23:59:59"),35455,35.00,0,"EUR"),
@@ -52,12 +52,12 @@ public class PricePersistenceAdapterTest {
         map.put("appDate","2020-06-14 10:00:00");
        List<Prices> prices= pricePersistenceAdapter.findByCriteria(map);
 
-        assertEquals(prices.stream().count()>0, false);
+        assertEquals(false,prices.stream().count()>0);
 
     }
 
     @Test
-    public void savePriceSuccess(){
+     void savePriceSuccess(){
         Prices pricesToSave=getBuildPrice();
         Prices saved= pricePersistenceAdapter.save(pricesToSave);
         assertNotNull(saved);

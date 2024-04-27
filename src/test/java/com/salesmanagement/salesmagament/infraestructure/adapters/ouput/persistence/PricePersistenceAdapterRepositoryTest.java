@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-public class PricePersistenceAdapterRepositoryTest {
+ class PricePersistenceAdapterRepositoryTest {
 
     @Autowired
     private PriceRepository priceRepository;
@@ -24,7 +24,7 @@ public class PricePersistenceAdapterRepositoryTest {
         priceRepository.deleteAll();
     }
     @Test
-    public void testInsert_record_prices(){
+     void testInsert_record_prices(){
         PriceEntity price = new PriceEntity(null,1,
                 Timestamp.valueOf("2020-06-14 00:00:00"),
                 Timestamp.valueOf("2020-12-31 23:59:59"),
@@ -37,7 +37,7 @@ public class PricePersistenceAdapterRepositoryTest {
 
     }
     @Test
-    public void testQuery_find_using_query(){
+     void testQuery_find_using_query(){
         List<PriceEntity> products = List.of(
                 new PriceEntity(1L,1,Timestamp.valueOf("2020-06-14 00:00:00"),Timestamp.valueOf("2020-12-31 23:59:59"),35455,35.00,0,"EUR"),
                 new PriceEntity(2L,1,Timestamp.valueOf("2020-06-14 15:00:00"),Timestamp.valueOf("2020-06-14 18:30:00"),35455,25.00,1,"EUR"),
@@ -52,7 +52,7 @@ public class PricePersistenceAdapterRepositoryTest {
         LocalDateTime time =LocalDateTime.of(2020,06,14,10,00);
         List<PriceEntity> prices=priceRepository.findPreciosByCriterias(brandId,productId,time);
         System.out.println(prices.stream().count());
-        assertEquals(prices.stream().count()>0,true);
+        assertEquals(true,prices.stream().count()>0);
     }
 
 }

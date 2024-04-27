@@ -42,9 +42,7 @@ public class PricePersistenceAdapter implements PricePersistencePort {
 
         Optional<PriceEntity> priceOp=prices.stream().sorted((x, y)->x.getPriority().compareTo(y.getPriority())).findFirst();
         List<Prices> result=new ArrayList<>();
-        priceOp.ifPresent(priceEntity->{
-            result.add(mapper.toPrices(priceEntity));
-        });
+        priceOp.ifPresent(priceEntity-> result.add(mapper.toPrices(priceEntity)));
 
         return result;
     }

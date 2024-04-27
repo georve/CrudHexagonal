@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 @AutoConfigureMockMvc
-public class PriceRestAdapterTest {
+ class PriceRestAdapterTest {
 
    @Autowired
    private MockMvc client;
@@ -41,7 +41,7 @@ public class PriceRestAdapterTest {
     private PriceMapper mapper;
 
     @Test
-    public void getPricesNotFound() throws Exception{
+    void getPricesNotFound() throws Exception{
         Map<String,String> map = new HashMap<>();
         map.put("starDate","2024-01-01");
         map.put("endDte","2024-03-01");
