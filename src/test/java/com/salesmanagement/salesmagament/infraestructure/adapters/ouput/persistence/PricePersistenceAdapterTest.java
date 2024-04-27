@@ -53,7 +53,7 @@ import static org.junit.jupiter.api.Assertions.*;
        List<Prices> prices= pricePersistenceAdapter.findByCriteria(map);
 
 
-        assertEquals(false,prices.stream().count()>0);
+        assertEquals(true,prices.stream().count()>0);
 
 
     }
