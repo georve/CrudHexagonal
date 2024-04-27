@@ -10,13 +10,17 @@ using a Domain Design in the inner core. The business logic is developed in the 
 core.
 
 There are tree main packages in the structure
+
+
 1. Domain: Is present the entity to be developed
 2. Application: Apply services and uses input and output port that communicates the
    domain layer with infrastructure layer
 3. Infrastructure: Layer that apply the specific technology, this have inputs and outputs
    in the input appears the controller that catch Http request and goes through the core and
    finally ends in the output to connect to any DB or even  send the information to another
-   API or even a Queue
+   API or even a Queue.
+
+![Image Alt text](/images/hex.png "Hexagola Architecure"))
 
 # How to compile the code
 
@@ -44,7 +48,45 @@ There are tree main packages in the structure
   
   inside the console you can perform any sql query to load register and see if they change.
 ```
-# Testing the application deployed in LocalHost
 
-* [Search first price](http://localhost:8080/prices?appDate='2020-06-14 10:00:00'&brandId=1&productId=35455)
-* [Insert A price]()
+# Operations in the API
+1. Insert A price to the list: 
+   This procedure is performed using a post to the following url
+   http://localhost:8080/prices
+   using the following JSON
+   ```javascript
+   {
+        "brandId": 1,
+        "startDate": "2024-06-16 00:00:00",
+        "endDate": "2024-06-26 23:59:59",
+        "productId": 35455,
+        "price": 80.0,
+        "countryCode":"EURO"
+    }
+   ```
+
+2. Update a price available in the list:
+   Perform a patch over the api url  http://localhost:8080/prices/{id}
+   where id is the row number that want to be changed
+      
+```javascript
+   {
+        "brandId": 1,
+        "startDate": "2024-06-16 00:00:00",
+        "endDate": "2024-06-26 23:59:59",
+        "productId": 35455,
+        "price": 80.0,
+        "countryCode":"EURO"
+    }
+```
+
+# Iterate over the database local
+ As the project is built using H2. The console is available to login
+ in the localhost url:
+ http://localhost:8080/h2-console/
+
+User: sa
+Pass: sa
+
+![Image Alt text](/images/H2console.png "H2 console"))
+ 
