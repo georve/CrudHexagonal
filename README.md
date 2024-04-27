@@ -24,7 +24,7 @@ There are tree main packages in the structure
 
 1. Clone the project in your local machine
 ```bash
-   git clone https://github.com/nuwe-reports/655c6de1c8d6b92ebc7b9431.git
+   git clone https://github.com/georve/CrudHexagonal.git
 ```
 
 2. Build the project
@@ -36,6 +36,13 @@ There are tree main packages in the structure
 ```bash
   mvn springboot:run
 
+#  How to accesses to Database local
+
+* [local database] (http://localhost:8080/h2-console/login.jsp?jsessionid=623120439a315467e236f485bebd2247)
+  user: sa
+  pass: sa
+  
+  inside the console you can perform any sql query to load register and see if they change.
 ```
 # Testing the application deployed in LocalHost
 

@@ -40,7 +40,7 @@ public class PricePersistenceAdapter implements PricePersistencePort {
         Integer.parseInt(productId),
         dateTime);
 
-        Optional<PriceEntity> priceOp=prices.stream().sorted((x, y)->x.getPriority().compareTo(y.getPriority())).findFirst();
+        Optional<PriceEntity> priceOp=prices.stream().sorted((x, y)->y.getPriority().compareTo(x.getPriority())).findFirst();
         List<Prices> result=new ArrayList<>();
         priceOp.ifPresent(priceEntity-> result.add(mapper.toPrices(priceEntity)));
 
