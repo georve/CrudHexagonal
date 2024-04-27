@@ -10,4 +10,8 @@ public interface PriceServicePort {
     List<Prices> findByCriteria(Map<String,String> criteria);
 
     Prices save(Prices priceToSave);
+
+    Prices findById(String priceList);
+
+    Prices update(String priceListId, Prices priceToUpdate);
 }

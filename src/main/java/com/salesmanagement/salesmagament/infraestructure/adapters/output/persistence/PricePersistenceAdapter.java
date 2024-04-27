@@ -42,9 +42,7 @@ public class PricePersistenceAdapter implements PricePersistencePort {
 
         Optional<PriceEntity> priceOp=prices.stream().sorted((x, y)->x.getPriority().compareTo(y.getPriority())).findFirst();
         List<Prices> result=new ArrayList<>();
-        priceOp.ifPresent(priceEntity->{
-            result.add(mapper.toPrices(priceEntity));
-        });
+        priceOp.ifPresent(priceEntity-> result.add(mapper.toPrices(priceEntity)));
 
         return result;
     }
@@ -53,6 +51,12 @@ public class PricePersistenceAdapter implements PricePersistencePort {
     public Prices save(Prices priceToSave) {
         PriceEntity entity=this.priceRepository.save(mapperToEntity(priceToSave));
         return this.mapper.toPrices(entity);
+    }
+
+    @Override
+    public Optional<Prices> findById(String priceList) {
+        return this.priceRepository.findById(Long.valueOf(priceList))
+                .map(mapper::toPrices);
     }
 
     private PriceEntity mapperToEntity(Prices prices){

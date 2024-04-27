@@ -18,7 +18,7 @@ public class GlobalControllerAdvice {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(PriceNotFoundException.class)
-    public ErrorResponse handleStudentNotFoundException() {
+    public ErrorResponse handleStudentNotFoundException(PriceNotFoundException exception) {
         return ErrorResponse.builder()
                 .code(PRICE_NOT_FOUND.getCode())
                 .message(PRICE_NOT_FOUND.getMessage())

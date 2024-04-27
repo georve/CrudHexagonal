@@ -2,6 +2,9 @@ package com.salesmanagement.salesmagament.infraestructure.adapters.input.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salesmanagement.salesmagament.application.ports.input.PriceServicePort;
+import com.salesmanagement.salesmagament.domain.exception.InternalException;
+import com.salesmanagement.salesmagament.domain.exception.PriceBadRequestException;
+import com.salesmanagement.salesmagament.domain.exception.PriceNotFoundException;
 import com.salesmanagement.salesmagament.domain.model.Prices;
 import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.mapper.PriceMapper;
 import com.salesmanagement.salesmagament.infraestructure.adapters.input.rest.model.PriceCreateDtoRequest;
@@ -16,12 +19,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 @AutoConfigureMockMvc
-public class PriceRestAdapterTest {
+ class PriceRestAdapterTest {
 
    @Autowired
    private MockMvc client;
@@ -44,7 +46,7 @@ public class PriceRestAdapterTest {
     private PriceMapper mapper;
 
     @Test
-    public void getPricesNotFound() throws Exception{
+    void getPricesNotFound() throws Exception{
         Map<String,String> map = new HashMap<>();
         map.put("starDate","2024-01-01");
         map.put("endDte","2024-03-01");
@@ -74,6 +76,18 @@ public class PriceRestAdapterTest {
                 .andDo(print());
 
     }
+    @Test
+    void getOnePriceWithBadTimeException() throws Exception{
+        Map<String,String> map = new HashMap<>();
+        map.put("starDate","2024-01-01 16:00:00");
+        map.put("endDte","2024-03-01 18:00:00");
+        when(port.findByCriteria(anyMap())).thenThrow(PriceBadRequestException.class);
+
+        client.perform(MockMvcRequestBuilders.get("/prices?starDate='2024-01-01 16:00:00'&endDte='2024-03-01 18:00:00'")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof PriceBadRequestException));
+    }
 
     @Test
     void createPriceSuccess()  throws Exception{
@@ -91,6 +105,59 @@ public class PriceRestAdapterTest {
                 ).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.brandId").value("1"))
                 .andExpect(jsonPath("$.price").value("22.5"));
+    }
+
+    @Test
+    void createPriceFailure() throws Exception{
+        PriceCreateDtoRequest priceToSave = getBuildPriceRequest();
+        when(mapper.toPrice(any())).thenReturn(getBuildPrice());
+        when(port.save(any())).thenThrow(RuntimeException.class);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String eatToDoJSON = objectMapper.writeValueAsString(priceToSave);
+
+        client.perform(post("/prices")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(eatToDoJSON)
+                ).andExpect(status().isInternalServerError())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof Exception));
+    }
+
+    @Test
+    void updateSuccessFullTest() throws Exception {
+        PriceCreateDtoRequest priceToSave = getBuildPriceRequest();
+        when(mapper.toPrice(any())).thenReturn(getBuildPrice());
+
+        when(port.update(anyString(),eq(getBuildPrice()))).thenReturn(getBuildPrice());
+        when(mapper.toPriceDtoResponse(any())).thenReturn(getBuildPriceResponse());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String eatToDoJSON = objectMapper.writeValueAsString(priceToSave);
+
+        client.perform(MockMvcRequestBuilders.put("/prices/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(eatToDoJSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.brandId").value("1"))
+                .andExpect(jsonPath("$.price").value("22.5"));
+
+
+    }
+
+    @Test
+    void updatePriceNotFound() throws Exception{
+        PriceCreateDtoRequest priceToSave = getBuildPriceRequest();
+        when(mapper.toPrice(any())).thenReturn(getBuildPrice());
+
+        when(port.update(anyString(),any())).thenThrow(PriceNotFoundException.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String eatToDoJSON = objectMapper.writeValueAsString(priceToSave);
+        client.perform(MockMvcRequestBuilders.put("/prices/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(eatToDoJSON))
+                .andExpect(status().isNotFound())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof PriceNotFoundException));
     }
 
     private PriceDtoResponse getBuildPriceResponse() {

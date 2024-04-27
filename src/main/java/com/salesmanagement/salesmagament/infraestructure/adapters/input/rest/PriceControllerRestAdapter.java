@@ -39,4 +39,9 @@ public class PriceControllerRestAdapter {
                 .body(restMapper.toPriceDtoResponse(
                         port.save(restMapper.toPrice(request))));
     }
+
+    @PutMapping("/{id}")
+    public PriceDtoResponse update(@PathVariable String id,@RequestBody PriceCreateDtoRequest request) {
+        return restMapper.toPriceDtoResponse(port.update(id,restMapper.toPrice(request)));
+    }
 }
