@@ -53,6 +53,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         List<PriceEntity> prices=priceRepository.findPreciosByCriterias(brandId,productId,time);
         System.out.println(prices.stream().count());
         assertEquals(true,prices.stream().count()>0);
+
     }
 
 }

@@ -52,7 +52,9 @@ import static org.junit.jupiter.api.Assertions.*;
         map.put("appDate","2020-06-14 10:00:00");
        List<Prices> prices= pricePersistenceAdapter.findByCriteria(map);
 
+
         assertEquals(false,prices.stream().count()>0);
+
 
     }
 
