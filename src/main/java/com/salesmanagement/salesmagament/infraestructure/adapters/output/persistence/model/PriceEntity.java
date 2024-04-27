@@ -1,11 +1,9 @@
 package com.salesmanagement.salesmagament.infraestructure.adapters.output.persistence.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.sql.Timestamp;
-import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +19,18 @@ public class PriceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="BRAND_ID")
     private Integer brandId;
+    @Column(name="START_DATE")
     private Timestamp  startDate;
+    @Column(name="END_DATE")
     private Timestamp  endDate;
+    @Column(name="PRODUCT_ID")
     private Integer productId;
+    @Column(name="PRICE")
     private Double  price;
+    @Column(name="PRIORITY")
     private Integer priority;
+    @Column(name="CURRENCY_CODE")
     private String currencyCode;
 }
