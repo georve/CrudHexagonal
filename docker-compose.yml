@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  hexagonal-api:
+    image: hexagonal-api
+    build:
+      context: .
+      dockerfile: CrudHexagonal/Dockerfile
+    ports:
+      - 8080:8080
+
+  tests:
+    image: functional-tests
+    build:
+       context: .
+       dockerfile: integrationtest/Dockerfile
+    entrypoint: newman
+    command: run HexagonalTestEcommerce.postman_collection.json --environment=hexagonal-environment.postman_environment.json  --reporters cli,json --reporter-json-export /data/results/outputfile.json
+    volumes:
+      - results:/data/results
+    depends_on:
+      - hexagonal-api
+
+volumes:
+  results:

@@ -138,6 +138,21 @@
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>3.9.0.2155</version> <!-- Replace with the latest version -->
 				</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.salesmanagement.salesmagament.SalesmagamentApplication</mainClass>
+					<layout>JAR</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

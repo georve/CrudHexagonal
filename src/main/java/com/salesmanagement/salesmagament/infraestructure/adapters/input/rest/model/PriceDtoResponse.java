@@ -13,4 +13,5 @@ public class PriceDtoResponse {
     private String  endDate;
     private Integer productId;
     private Double  price;
+    private String  id;
 }
