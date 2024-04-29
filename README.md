@@ -90,3 +90,12 @@ Pass: sa
 
 ![Image Alt text](/images/H2console.png "H2 console"))
  
+# automatic integration test
+
+To test 5 uses cases related to be used in the automatic deployment
+a docker file was added to ejecute testing
+
+execute 
+```bash
+  docker-compose up
+```
