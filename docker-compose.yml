@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  hexagonal-api:
+    image: hexagonal-api
+    build:
+      context: .
+      dockerfile: CrudHexagonal/Dockerfile
+    ports:
+      - 8080:8080
+    healthcheck:
+      test: "curl --fail --silent http://localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 2s
+
+  tests:
+    image: functional-tests
+    build:
+       context: .
+       dockerfile: integrationtest/Dockerfile
+    entrypoint: newman
+    command: run HexagonalTestEcommerce.postman_collection.json --environment=hexagonal-environment.postman_environment.json  --reporters cli,json --reporter-json-export /data/results/outputfile.json
+    volumes:
+      - results:/data/results
+    depends_on:
+      hexagonal-api:
+        condition: service_healthy
+
+volumes:
+  results:
