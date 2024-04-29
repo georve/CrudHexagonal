@@ -90,3 +90,19 @@ Pass: sa
 
 ![Image Alt text](/images/H2console.png "H2 console"))
  
+# automatic integration test
+
+To test 5 uses cases related to be used in the automatic deployment
+a docker file was added to ejecute testing
+
+execute 
+```bash
+  docker-compose up
+```
+
+# Postman Testing 
+
+ there is a folder called /integrationtest in which there is a collection and an environment variable
+ that can be imported in postman and when the api is deployed locally can be executed the collection
+ and see how many test are success. These script could be uses in ci/cd action to identify if the 
+ project is ok.
