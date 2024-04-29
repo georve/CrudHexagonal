@@ -106,3 +106,26 @@ execute
  that can be imported in postman and when the api is deployed locally can be executed the collection
  and see how many test are success. These script could be uses in ci/cd action to identify if the 
  project is ok.
+ 
+# Pasos y decisiones tomadas
+1 . Pruebas con postman y docker: Se desarrollo un proceso de pruebs automatizadac con docker
+    usando docker compose, por lo que se agregaron las pruebas en un docker corriendo con newman
+    pero al momento de ejecutar las  pruebas, estas corrian antes que el contenedor de spring boot
+    este arriba y todas caen por conexion, sin embargo se coloco un health check pero de igual manera
+    no arrancaron.
+
+2. Opcion de correr pruebas en el pipeline de github. Esta opcion es una alternativa para los docker
+   y no se usa los contenedores y con las opciones pagas de postman se puede generar un api key para
+   conectar postman con github y que permite al hacer un pull correr todas las pruebas de integracion
+   con el H2 para ver si las funcionalidades no se hayan roto.
+
+3. Se ha incorporado con action en el repo que hace el build automatico para ver si el codigo
+   compila y se puede agregar tareas para generar docker y hacer despliegues
+
+# Cambios para mejorar la funcionalidades
+
+1. Cambiar api rest por reactiva para tener actualiza las tecnologias.
+2. Incluir en el pileline sonar para que los pull request esten asociados a 
+   la calidad.
+3. Incluir pruebas integrales en el pileline para ver que las pruenas funcionales
+   pasesn  y no se rompan las funcionalidades,
