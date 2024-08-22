@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 @Service
 public class PricePersistenceAdapter implements PricePersistencePort {
 
@@ -35,14 +33,16 @@ public class PricePersistenceAdapter implements PricePersistencePort {
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
          LocalDateTime dateTime = LocalDateTime.parse(appDate, formatter);
 
+        List<PriceEntity> prices = priceRepository.findPreciosByCriterias(
+                Integer.parseInt(brandId),
+                Integer.parseInt(productId),
+                dateTime);
 
-        List<PriceEntity> prices=priceRepository.findPreciosByCriterias(Integer.parseInt(brandId),
-        Integer.parseInt(productId),
-        dateTime);
-
-        Optional<PriceEntity> priceOp=prices.stream().sorted((x, y)->y.getPriority().compareTo(x.getPriority())).findFirst();
-        List<Prices> result=new ArrayList<>();
-        priceOp.ifPresent(priceEntity-> result.add(mapper.toPrices(priceEntity)));
+        List<Prices> result = prices.stream()
+                .findFirst()
+                .map(priceEntity -> mapper.toPrices(priceEntity))
+                .map(Collections::singletonList)
+                .orElse(Collections.emptyList());
 
         return result;
     }

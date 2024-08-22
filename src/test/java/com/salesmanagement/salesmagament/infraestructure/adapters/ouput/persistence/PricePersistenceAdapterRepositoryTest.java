@@ -52,7 +52,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         LocalDateTime time =LocalDateTime.of(2020,06,14,10,00);
         List<PriceEntity> prices=priceRepository.findPreciosByCriterias(brandId,productId,time);
         System.out.println(prices.stream().count());
-        assertEquals(false,prices.stream().count()>0);
+        assertEquals(true,prices.stream().count()>0);
 
     }
 
