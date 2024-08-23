@@ -8,4 +8,5 @@ copy ../target/*.jar app.jar
 
 ENTRYPOINT ["/wait-for-it.sh", "localhost:8080", "--", "java", "-jar", "/app.jar"]
 EXPOSE 8080
-HEALTHCHECK CMD curl --fail localhost:8080/actuator/health || exit 1
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD curl --fail http://localhost:8080/actuator/health || exit 1
