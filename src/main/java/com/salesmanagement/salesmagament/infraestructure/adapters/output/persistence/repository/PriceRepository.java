@@ -11,15 +11,17 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface PriceRepository extends JpaRepository<PriceEntity, Long> {
-    
+
 
     @Query("""
-        select a from PriceEntity a 
-        where a.brandId = :brandId 
-        and a.productId = :productId
-        and a.startDate <= :appDate
-        and a.endDate >= :appDate
-        """)
+           select a from PriceEntity a 
+           where a.brandId = :brandId 
+           and a.productId = :productId
+           and :appDate between a.startDate
+           and a.endDate
+           order by a.priority desc
+           LIMIT 1
+    """)
     List<PriceEntity> findPreciosByCriterias(
         @Param("brandId") Integer brandId,
         @Param("productId") Integer productId,

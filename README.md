@@ -114,12 +114,21 @@ execute
     este arriba y todas caen por conexion, sin embargo se coloco un health check pero de igual manera
     no arrancaron.
 
-2. Opcion de correr pruebas en el pipeline de github. Esta opcion es una alternativa para los docker
+2. Se incluyeron los pruebas integrales para poderprobar la logica conmpleta usando junit.
+
+3. Para mejorar el perfomance de las busquedas en las tablas, se agregaron unos indices que permiten
+   tene la data depurada y permitir busquedas con valores optimos.
+   @Index(name = "idx_price_brand_product_dates", columnList = "BRAND_ID, PRODUCT_ID, START_DATE, END_DATE"),
+   @Index(name = "idx_price_priority", columnList = "PRIORITY").
+4. A nivel de tablas habria que aplicar otras estrategias, pero para el uso de esta prueba se esta usandoo
+   una tabla H2.
+
+5. Opcion de correr pruebas en el pipeline de github. Esta opcion es una alternativa para los docker
    y no se usa los contenedores y con las opciones pagas de postman se puede generar un api key para
    conectar postman con github y que permite al hacer un pull correr todas las pruebas de integracion
    con el H2 para ver si las funcionalidades no se hayan roto.
 
-3. Se ha incorporado con action en el repo que hace el build automatico para ver si el codigo
+6. Se ha incorporado con action en el repo que hace el build automatico para ver si el codigo
    compila y se puede agregar tareas para generar docker y hacer despliegues
 
 # Cambios para mejorar la funcionalidades

@@ -14,4 +14,5 @@ public class PriceCreateDtoRequest {
     private Integer productId;
     private Double  price;
     private Integer priority;
+    private String currencyCode;
 }
