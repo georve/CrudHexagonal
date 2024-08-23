@@ -17,9 +17,10 @@ public interface PriceRepository extends JpaRepository<PriceEntity, Long> {
            select a from PriceEntity a 
            where a.brandId = :brandId 
            and a.productId = :productId
-           and a.startDate <= :appDate
-           and a.endDate >= :appDate
+           and :appDate between a.startDate
+           and a.endDate
            order by a.priority desc
+           LIMIT 1
     """)
     List<PriceEntity> findPreciosByCriterias(
         @Param("brandId") Integer brandId,

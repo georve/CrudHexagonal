@@ -14,7 +14,13 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "price")
+@Table(
+        name = "price",
+        indexes = {
+                @Index(name = "idx_price_brand_product_dates", columnList = "BRAND_ID, PRODUCT_ID, START_DATE, END_DATE"),
+                @Index(name = "idx_price_priority", columnList = "PRIORITY")
+        }
+)
 public class PriceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
